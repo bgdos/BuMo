@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Untitled Document</title>
-    <link href="style.css" rel="stylesheet">
-    <script src="charts.js"></script>
-    <script src="functions.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/js.css" rel="stylesheet">
+    <script src="js/jscharts.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/js.js"></script>
 </head>
     <body onload="start()">
         <div class="sidebar" id="sidebar">
@@ -18,7 +21,11 @@
             </div>
         </div>
         <header>
-            <img src='https://cloud.githubusercontent.com/assets/12112938/11165371/7af9fe18-8ac1-11e5-9e6f-9cf40a5a9272.png' onmouseover="showMenu()" onclick="showHideMenu()"><h1>Bu<span>Mo</span></h1>
+            <img src='images/menu-128.png' onmouseover="showMenu()" onclick="showHideMenu()"><h1>Bu<span>Mo</span></h1>
+            <div class="user">
+                <img src="images/my.jpg">
+                <p>Welcome, Juan Salgado</p>
+            </div>
         </header>
         <container>
             <div class="status">
@@ -27,45 +34,53 @@
                     <div class="status-right date"><h4 class="dash-stat" id="date">Nov 12, 2015</h4></div>
                 </div>
                 <div class="col-1 display ">
-                    <div class="status-left max"><img src="https://cloud.githubusercontent.com/assets/12112938/11165372/7e659d32-8ac1-11e5-836e-c32292c546df.png"><h1 class="dash-stat">Max</h1></div>
-                    <div class="status-right max-val"><h1 class="dash-stat" id="max-val"></h1></div>
+                    <div class="status-left max"><img src="images/temp.png"><h1 class="dash-stat">Max</h1></div>
+                    <div class="status-right max-val"><h1 class="dash-stat" id="max-val">0°</h1></div>
                 </div>
                 <div class="col-1 display ">
-                    <div class="status-left min"><img src="https://cloud.githubusercontent.com/assets/12112938/11165372/7e659d32-8ac1-11e5-836e-c32292c546df.png"><h1 class="dash-stat">Min</h1></div>
-                    <div class="status-right  min-val"><h1 class="dash-stat" id="min-val"></h1></div>
+                    <div class="status-left min"><img src="images/temp.png"><h1 class="dash-stat">Min</h1></div>
+                    <div class="status-right  min-val"><h1 class="dash-stat" id="min-val">0°</h1></div>
                 </div>
                 <div class="col-1 display">
-                    <div class="status-left aver"><img src="https://cloud.githubusercontent.com/assets/12112938/11165372/7e659d32-8ac1-11e5-836e-c32292c546df.png"><h1 class="dash-stat">Aver</h1></div>
-                    <div class="status-right aver-val"><h1 class="dash-stat" id="aver-val"></h1></div>
+                    <div class="status-left aver"><img src="images/temp.png"><h1 class="dash-stat">Aver</h1></div>
+                    <div class="status-right aver-val"><h1 class="dash-stat" id="aver-val">0°</h1></div>
                 </div>
             </div>
             <div class="graph">
+                <div class="buttons">
+                    <label>Station:</label>
+                    <a onclick="startTimer('', this)">All</a>
+                    <a onclick="startTimer(1, this)">Station 1</a>
+                    <a onclick="startTimer(2, this)">Station 2</a>
+                    <a onclick="startTimer(3, this)">Station 3</a>
+                </div>
                 <svg id="graph" viewBox="0 0 900 370" preserveAspectRatio="xMaxYMid meet"></svg>
             </div>
             <div class="bottom">
                 <div class="colx3">
                     <div class="header">
-                        <div><p>Details</p></div>
-                        <div><p>Progress</p></div>
+                        <div><p>Sensor</p></div>
+                        <div><p>Status</p></div>
                     </div>
                     <div class="col-1 details-data">
-                        <div class="col-2">
-<!--
-                            <h4>Detail 1</h4>
-                            <h4>Detail 2</h4>
-                            <h4>Detail 3</h4>
-                            <h4>Detail 4</h4>
-                            <h4>Detail 5</h4>
--->
+                        <div class="col-1">
+                            <div class="col-2">Station 1</div>
+                            <div class="col-2">
+                                <label>OFF</label><div class="switch-bg"><div id="s1" class="switch switch-on" onclick="Switch(this, 'Station 1')" spellcheck='true'></div></div><label>ON</label>
+                                
+                            </div>
                         </div>
-                        <div class="col-2 data">
-<!--
-                            <div class="progress"><div class="value mid"></div></div>
-                            <div class="progress"><div class="value min"></div></div>
-                            <div class="progress"><div class="value max"></div></div>
-                            <div class="progress"><div class="value min"></div></div>
-                            <div class="progress"><div class="value mid"></div></div>
--->
+                        <div class="col-1">
+                            <div class="col-2">Station 2</div>
+                            <div class="col-2">
+                                <label>OFF</label><div class="switch-bg"><div id="s2" class="switch switch-on" onclick="Switch(this, 'Station 2')" spellcheck='true'></div></div><label>ON</label>     
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="col-2">Station 3</div>
+                            <div class="col-2">
+                                <label>OFF</label><div class="switch-bg"><div id="s3" class="switch switch-on" onclick="Switch(this, 'Station 3')" spellcheck='true'></div></div><label>ON</label>     
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,17 +89,28 @@
                         <p>Activity</p>
                     </div>
                     <div class="col-1 div-activity">
-                        <section class="activity-data"  id="activity"></section >
+                        <section class="activity-data"  id="activity">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Temperature</th>
+                                        <th>Sensor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </section>
                     </div>
                 </div> 
                 <div class="colx1">
-                    <div class="header">
-                        <p>Other</p>
-                    </div>
-                    <div class="col-1 other-data">
-                        <Ul>
-                            <li>data generated</li>
-                        </Ul>
+                    <div class="col-1">
+                        <div class="header">
+                        <p>Week Averages</p>
+                        </div>
+                        <div class="col-1 this-week">
+                        </div>
                     </div>
                 </div> 
             </div>
